@@ -1,0 +1,10 @@
+res="edq"
+seg=54
+nsegmentos=85
+julian_day_ini=1
+julian_day_fim=1096
+ctmax=205
+ctver=201
+ctmin=170.37
+tipo=2
+preproc=0

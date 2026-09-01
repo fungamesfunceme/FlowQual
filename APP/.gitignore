@@ -1,0 +1,24 @@
+# Dados e resultados locais
+Reservatorios/
+resultados_tipo*/
+Resultados_tipo*/
+local-output/
+
+# Bibliotecas e estado local do R
+R-library/
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+Rplots.pdf
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
+~$*
+
+# Arquivos do sistema operacional
+Thumbs.db
+Desktop.ini
+

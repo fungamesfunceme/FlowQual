@@ -1,0 +1,1012 @@
+.Edson Queiroz                                                          
+.01-01-2016 a 31-12-2019                                                
+.                                                                       
+.                                                                       
+.                                                                       
+.                                                                       
+.                                                                       
+                                                                        
+                                                                        
+                                                                        
+Model run at 10:45:18 on 07/27/26                                       
+      37       3     200      28      23       1       1      22 F
+      10      18      26
+  ON OFF OFF OFF OFF OFF  ON OFF OFF OFF OFF OFF OFF OFF OFF OFF  ON  ON OFF OFF
+ OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF OFF
+  ON OFF  ON OFF OFF OFF OFF OFF OFF OFF OFF OFF
+Temperature, øC                            TDS, g/m^3                                 
+Tracer, g/m^3                              Age, days                                  
+Coliform, g/m^3                            ISS, g/m^3                                 
+Phosphate, g/m^3                           Ammonium, g/m^3                            
+Nitrate-Nitrite, g/m^3                     Dissolved silica, g/m^3                    
+Particulate silica, g/m^3                  Total iron, g/m^3                          
+Labile DOM, g/m^3                          Refractory DOM, g/m^3                      
+Labile POM, g/m^3                          Refractory POM, g/m^3                      
+Algae, g/m^3                               Dissolved oxygen, g/m^3                    
+Inorganic carbon, g/m^3                    Alkalinity, g/m^3                          
+zooplankton1, mg/m^3                       LDOM P, mg/m^3                             
+RDOM P, mg/m^3                             LPOM P, mg/m^3                             
+RPOM P, mg/m^3                             LDOM N, mg/m^3                             
+RDOM N, mg/m^3                             LPOM N, mg/m^3                             
+RPOM N, mg/m^3                             Dissolved organic carbon, g/m^3            
+Particulate organic carbon, g/m^3          Total organic carbon, g/m^3                
+Dissolved organic nitrogen, g/m^3          Particulate organic nitrogen, g/m^3        
+Total organic nitrogen, g/m^3              Total Kheldahl Nitrogen, g/m^3             
+Total nitrogen, g/m^3                      Dissolved organic phosphorus, mg/m^3       
+Particulate organic phosphorus, mg/m^3     Total organic phosphorus, mg/m^3           
+Total phosphorus, mg/m^3                   Algal production, g/m^2/day                
+Chlorophyll a, mg/m^3                      Total algae, g/m^3                         
+Oxygen % Gas Saturation                    Total suspended Solids, g/m^3              
+Total Inorganic Suspended Solids,g/m^3     Carbonaceous Ultimate BOD, g/m^3           
+pH                                         CO2                                        
+HCO3                                       CO3                                        
+   1
+      1.      1.      1.      1.      1.      1.      1.      1.      1.      1.
+      1.      1.      1.      1.      1.      1.      1.      1.      1.      1.
+   1000.   1000.   1000.   1000.   1000.   1000.   1000.   1000.   1000.      1.
+      1.      1.      1.      1.      1.      1.      1.   1000.   1000.   1000.
+   1000.      1.      1.      1.      1.      1.      1.      1.      1.      1.
+      1.      0.
+  10  13  16
+    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00
+    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00
+    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00    1.00
+    1.00    1.00    1.00    1.00    1.00    1.00    1.00
+TEMP     -11
+
+TEMP      -8
+
+TEMP      -5
+
+  64.700 Mar  4, 2016  21 -0.3054       1
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  65.700 Mar  5, 2016  21 -0.2947       2
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  66.700 Mar  6, 2016  21 -0.2903       3
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  67.700 Mar  7, 2016  21 -0.2775       4
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  68.700 Mar  8, 2016  21 -0.2641       5
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  69.700 Mar  9, 2016  21 -0.2542       6
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  70.700 Mar 10, 2016  21 -0.2537       7
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  71.700 Mar 11, 2016  21 -0.2496       8
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  72.700 Mar 12, 2016  21 -0.2389       9
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  73.700 Mar 13, 2016  21 -0.2374      10
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  74.700 Mar 14, 2016  21 -0.2350      11
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  75.700 Mar 15, 2016  21 -0.2232      12
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  76.700 Mar 16, 2016  21 -0.2106      13
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  77.700 Mar 17, 2016  21 -0.2012      14
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  78.700 Mar 18, 2016  21 -0.1975      15
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  79.700 Mar 19, 2016  21 -0.1847      16
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  80.700 Mar 20, 2016  21 -0.1719      17
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  81.700 Mar 21, 2016  21 -0.1604      18
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  82.700 Mar 22, 2016  21 -0.1568      19
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  83.700 Mar 23, 2016  21 -0.1454      20
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  84.700 Mar 24, 2016  21 -0.1316      21
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  85.700 Mar 25, 2016  21 -0.1181      22
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  86.700 Mar 26, 2016  21 -0.1048      23
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  87.700 Mar 27, 2016  21 -0.0954      24
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  88.700 Mar 28, 2016  21 -0.1008      25
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  89.700 Mar 29, 2016  21 -0.1172      26
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  90.700 Mar 30, 2016  21 -0.1207      27
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  91.700 Mar 31, 2016  21 -0.1326      28
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  92.700 Apr  1, 2016  21 -0.1439      29
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  93.700 Apr  2, 2016  21 -0.1537      30
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  94.700 Apr  3, 2016  21 -0.1549      31
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  95.700 Apr  4, 2016  21 -0.1558      32
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  96.700 Apr  5, 2016  21 -0.1812      33
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  97.700 Apr  6, 2016  21 -0.3050      34
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  98.700 Apr  7, 2016  21 -0.4968      35
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+  99.700 Apr  8, 2016  21 -0.6071      36
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 100.700 Apr  9, 2016  21 -0.6512      37
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 101.700 Apr 10, 2016  21 -0.6689      38
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 102.700 Apr 11, 2016  21 -0.6872      39
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 103.700 Apr 12, 2016  21 -0.6919      40
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 104.700 Apr 13, 2016  21 -0.7000      41
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 105.700 Apr 14, 2016  21 -0.7009      42
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 106.700 Apr 15, 2016  21 -0.7013      43
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 107.700 Apr 16, 2016  21 -0.6994      44
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 108.700 Apr 17, 2016  21 -0.6919      45
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 109.700 Apr 18, 2016  21 -0.6910      46
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 110.700 Apr 19, 2016  21 -0.6880      47
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 111.700 Apr 20, 2016  21 -0.6784      48
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 112.700 Apr 21, 2016  21 -0.6770      49
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 113.700 Apr 22, 2016  21 -0.6737      50
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 114.700 Apr 23, 2016  21 -0.6659      51
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 115.700 Apr 24, 2016  21 -0.6620      52
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 116.700 Apr 25, 2016  21 -0.6495      53
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 117.700 Apr 26, 2016  21 -0.6353      54
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 118.700 Apr 27, 2016  21 -0.6231      55
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 119.700 Apr 28, 2016  21 -0.6099      56
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 120.700 Apr 29, 2016  21 -0.5966      57
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 121.700 Apr 30, 2016  21 -0.5869      58
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 122.700 May  1, 2016  21 -0.5860      59
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 123.700 May  2, 2016  21 -0.5882      60
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 124.700 May  3, 2016  21 -0.5967      61
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 125.700 May  4, 2016  21 -0.5946      62
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 126.700 May  5, 2016  21 -0.5828      63
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 127.700 May  6, 2016  21 -0.5741      64
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 128.700 May  7, 2016  21 -0.5705      65
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 129.700 May  8, 2016  21 -0.5641      66
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 130.700 May  9, 2016  21 -0.5696      67
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 131.700 May 10, 2016  21 -0.5606      68
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 132.700 May 11, 2016  21 -0.5571      69
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 133.700 May 12, 2016  21 -0.5492      70
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 134.700 May 13, 2016  21 -0.5458      71
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 135.700 May 14, 2016  21 -0.5374      72
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 136.700 May 15, 2016  21 -0.5346      73
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 137.700 May 16, 2016  21 -0.5234      74
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 138.700 May 17, 2016  21 -0.5136      75
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 139.700 May 18, 2016  21 -0.5083      76
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 140.700 May 19, 2016  21 -0.4943      77
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 141.700 May 20, 2016  21 -0.4845      78
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 142.700 May 21, 2016  21 -0.4796      79
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 143.700 May 22, 2016  21 -0.4669      80
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 144.700 May 23, 2016  21 -0.4541      81
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 145.700 May 24, 2016  21 -0.4436      82
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 146.700 May 25, 2016  21 -0.4395      83
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 147.700 May 26, 2016  21 -0.4263      84
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 148.700 May 27, 2016  21 -0.4157      85
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 149.700 May 28, 2016  21 -0.4107      86
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 150.700 May 29, 2016  21 -0.4010      87
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 151.700 May 30, 2016  21 -0.4028      88
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 152.700 May 31, 2016  21 -0.4114      89
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 153.700 Jun  1, 2016  21 -0.4101      90
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 154.700 Jun  2, 2016  21 -0.4015      91
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 155.700 Jun  3, 2016  21 -0.3978      92
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 156.700 Jun  4, 2016  21 -0.3901      93
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 157.700 Jun  5, 2016  21 -0.3860      94
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 158.700 Jun  6, 2016  21 -0.3739      95
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 159.700 Jun  7, 2016  21 -0.3627      96
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 160.700 Jun  8, 2016  21 -0.3496      97
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 161.700 Jun  9, 2016  21 -0.3400      98
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 162.700 Jun 10, 2016  21 -0.3362      99
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 163.700 Jun 11, 2016  21 -0.3278     100
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 164.700 Jun 12, 2016  21 -0.3250     101
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 165.700 Jun 13, 2016  21 -0.3130     102
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 166.700 Jun 14, 2016  21 -0.3001     103
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 167.700 Jun 15, 2016  21 -0.2899     104
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 168.700 Jun 16, 2016  21 -0.2848     105
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 169.700 Jun 17, 2016  21 -0.2708     106
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 170.700 Jun 18, 2016  21 -0.2570     107
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 171.700 Jun 19, 2016  21 -0.2446     108
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 172.700 Jun 20, 2016  21 -0.2339     109
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 173.700 Jun 21, 2016  21 -0.2286     110
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 174.700 Jun 22, 2016  21 -0.2158     111
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 175.700 Jun 23, 2016  21 -0.2008     112
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 176.700 Jun 24, 2016  21 -0.1914     113
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 177.700 Jun 25, 2016  21 -0.1867     114
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 178.700 Jun 26, 2016  21 -0.1733     115
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 179.700 Jun 27, 2016  21 -0.1592     116
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 180.700 Jun 28, 2016  21 -0.1457     117
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 181.700 Jun 29, 2016  21 -0.1319     118
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 182.700 Jun 30, 2016  21 -0.1168     119
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 183.700 Jul  1, 2016  21 -0.1038     120
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 184.700 Jul  2, 2016  21 -0.0902     121
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 185.700 Jul  3, 2016  21 -0.0775     122
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 186.700 Jul  4, 2016  21 -0.0640     123
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 187.700 Jul  5, 2016  21 -0.0513     124
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 188.700 Jul  6, 2016  21 -0.0388     125
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 189.700 Jul  7, 2016  21 -0.0340     126
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 190.700 Jul  8, 2016  21 -0.0417     127
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 191.700 Jul  9, 2016  21 -0.0414     128
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 192.700 Jul 10, 2016  21 -0.0316     129
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 193.700 Jul 11, 2016  21 -0.0212     130
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 194.700 Jul 12, 2016  21 -0.0133     131
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 195.700 Jul 13, 2016  21 -0.0101     132
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 196.700 Jul 14, 2016  21  0.0018     133
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 197.700 Jul 15, 2016  21  0.0157     134
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 198.700 Jul 16, 2016  21  0.0278     135
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+
+ 199.700 Jul 17, 2016  21  0.0369     136
+TEMP     -10
+
+TEMP      -7
+
+TEMP      -4
+

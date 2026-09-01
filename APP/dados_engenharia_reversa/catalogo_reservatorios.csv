@@ -1,0 +1,156 @@
+"ID","Reservatorio","Municipio","Bacia","Status","Problemas","Alertas","Data_inicio_niveis","Data_fim_niveis","Registros_niveis","Datas_duplicadas_niveis","Cotas_ausentes","Tem_retiradas","Tem_precipitacao","Tem_CAV","Tem_vertedor","Tem_evaporacao","Tem_comporta","Tem_transferencia","Arquivo","Tamanho_bytes"
+78,"Acarape do Meio","Redenção","10","pronto","","392 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12950,392,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0078.rds",202793
+1,"Acaraú Mirim","Massapê","6","pronto","","476 data(s) duplicada(s) nos niveis",1985-12-31,2026-04-23,15092,476,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0001.rds",182031
+32,"Adauto Bezerra","Pereiro","4","pronto","","550 data(s) duplicada(s) nos niveis",1992-02-01,2026-04-23,9456,550,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0032.rds",147953
+45,"Amanary","Maranguape","10","pronto","","430 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12519,430,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0045.rds",177066
+112,"Angicos","Coreaú","7","pronto","","129 data(s) duplicada(s) nos niveis",1998-07-01,2026-04-23,8157,129,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0112.rds",155717
+234,"Aracoiaba","Aracoiaba","10","pronto","","456 data(s) duplicada(s) nos niveis",2003-02-01,2026-04-23,8932,456,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0234.rds",162379
+31,"Araras","Varjota","6","pronto","","600 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,15137,600,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0031.rds",202264
+240,"Arneiroz II","Arneiroz","1","pronto","","370 data(s) duplicada(s) nos niveis",2005-03-03,2026-04-23,7798,370,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0240.rds",142374
+83,"Arrebita","Forquilha","6","pronto","","34 data(s) duplicada(s) nos niveis",1995-05-17,2026-04-23,10047,34,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0083.rds",159418
+47,"Atalho","Brejo Santo ","2","pronto","","257 data(s) duplicada(s) nos niveis",1992-02-01,2026-04-21,8776,257,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0047.rds",178005
+49,"Ayres de Sousa","Sobral","6","pronto","","310 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,13915,310,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,"reservatorios/reservatorio_0049.rds",199881
+2,"Banabuiú","Banabuiú","3","pronto","","363 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14943,363,0,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,"reservatorios/reservatorio_0002.rds",223049
+163,"Barra Velha","Independência","9","pronto","","43 data(s) duplicada(s) nos niveis",1999-01-03,2026-04-23,8731,43,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0163.rds",140135
+202,"Barragem do Batalhão","Crateús","9","incompleto","parametros do vertedor incompletos","",2013-05-01,2026-04-23,4340,0,0,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0202.rds",96661
+173,"Batente","Ocara","10","pronto","","",2011-01-01,2026-04-23,5389,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0173.rds",121803
+177,"Benguê","Aiuaba","1","pronto","","456 data(s) duplicada(s) nos niveis",2000-07-01,2026-04-23,9716,456,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0177.rds",145621
+64,"Bonito","Ipú","6","pronto","","",1986-01-01,2025-09-02,9780,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0064.rds",158341
+125,"Broco","Tauá","1","incompleto","parametros do vertedor incompletos","",2012-06-01,2025-09-08,4570,0,0,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0125.rds",99667
+170,"Cachoeira","Aurora","2","pronto","","120 data(s) duplicada(s) nos niveis",2000-09-01,2026-04-23,9346,120,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0170.rds",154772
+217,"Caldeirões","Saboeiro","1","pronto","","",2015-02-01,2026-04-23,4093,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0217.rds",90377
+74,"Canafístula","Iracema","4","pronto","","86 data(s) duplicada(s) nos niveis",1992-11-01,2026-04-23,11610,86,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0074.rds",161720
+127,"Canoas","Assaré","1","pronto","","117 data(s) duplicada(s) nos niveis",1997-12-28,2026-04-23,9581,117,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0127.rds",165352
+33,"Capitão Mor","Pedra Branca","3","pronto","","370 data(s) duplicada(s) nos niveis",1992-01-01,2026-04-23,11048,370,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0033.rds",162721
+65,"Carão","Tamboril","6","pronto","","179 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-22,12606,179,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0065.rds",165166
+236,"Carmina","Catunda","6","pronto","","49 data(s) duplicada(s) nos niveis",2003-03-24,2026-04-23,7384,49,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0236.rds",126730
+53,"Carnaubal","Crateús","9","pronto","","112 data(s) duplicada(s) nos niveis",1992-05-01,2026-04-23,10377,112,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0053.rds",161323
+194,"Castanhão","Alto Santo","4","pronto","","371 data(s) duplicada(s) nos niveis",2002-01-01,2026-04-23,9229,371,0,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,"reservatorios/reservatorio_0194.rds",188682
+97,"Castro","Itapiúna","10","pronto","","372 data(s) duplicada(s) nos niveis",1996-06-01,2026-04-23,10800,372,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0097.rds",161440
+223,"Catucinzenta","Aquiraz","10","pronto","","367 data(s) duplicada(s) nos niveis",2002-04-01,2026-04-23,9038,367,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0223.rds",163158
+158,"Cauhipe","Caucaia","10","pronto","","370 data(s) duplicada(s) nos niveis",1999-03-01,2026-04-23,9563,370,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0158.rds",151347
+3,"Caxitoré","Umirim","8","pronto","","366 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,15081,366,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0003.rds",205757
+4,"Cedro","Quixadá","3","pronto","","371 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-14,14287,371,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0004.rds",181871
+84,"Cipoada","Morada Nova","3","pronto","","65 data(s) duplicada(s) nos niveis",1995-05-12,2026-04-23,10039,65,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0084.rds",165227
+220,"Cocó","Fortaleza","10","pronto","","",2017-07-01,2026-04-23,3219,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0220.rds",114418
+133,"Colina","Quiterianópolis","9","pronto","","250 data(s) duplicada(s) nos niveis",1998-04-01,2026-04-23,8188,250,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0133.rds",132528
+34,"Cupim","Independência","9","pronto","","291 data(s) duplicada(s) nos niveis",1992-01-01,2026-04-23,8653,291,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0034.rds",138854
+197,"Curral Velho","Morada Nova","3","pronto","","307 data(s) duplicada(s) nos niveis",2007-09-04,2026-04-23,6974,307,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0197.rds",134727
+178,"Desterro","Caridade","8","pronto","","",2000-07-01,2025-09-05,8722,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0178.rds",152148
+60,"Diamante","Coreaú","7","pronto","","143 data(s) duplicada(s) nos niveis",1992-06-01,2026-04-23,8193,143,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0060.rds",158065
+215,"Diamantino II","Marco","7","pronto","","",2015-06-10,2026-04-23,3961,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0215.rds",99654
+134,"Do Coronel","Antonina do Norte","1","pronto","","",1998-07-01,2025-07-29,7484,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0134.rds",139257
+5,"Edson Queiroz","Santa Quitéria","6","pronto","","204 data(s) duplicada(s) nos niveis",1989-01-01,2026-04-23,13208,204,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0005.rds",191524
+30,"Ema","Iracema","4","pronto","","372 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14740,372,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0030.rds",173914
+44,"Escuridão","Canindé","8","pronto","","",1992-03-27,2025-09-05,5048,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0044.rds",115114
+208,"Facundo","Parambu","1","pronto","","",2013-11-01,2026-04-23,4537,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0208.rds",98579
+239,"Faé","Quixelô","1","pronto","","318 data(s) duplicada(s) nos niveis",2005-03-02,2026-04-23,7746,318,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0239.rds",137425
+59,"Farias de Sousa","Nova Russas","6","pronto","","290 data(s) duplicada(s) nos niveis",1987-01-01,2026-04-23,12300,290,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0059.rds",159489
+6,"Favelas","Tauá","1","pronto","","",1989-01-01,2025-09-08,11431,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0006.rds",163058
+212,"Figueiredo","Alto Santo","4","pronto","","",2013-04-20,2026-04-23,4695,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0212.rds",110971
+172,"Flor do Campo","Novo Oriente","9","pronto","","374 data(s) duplicada(s) nos niveis",1999-03-31,2026-04-23,9563,374,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0172.rds",158159
+119,"Fogareiro","Quixeramobim","3","pronto","","368 data(s) duplicada(s) nos niveis",1996-01-14,2026-04-23,10176,368,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0119.rds",172190
+51,"Forquilha","Forquilha","6","pronto","","286 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12572,286,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0051.rds",175683
+72,"Forquilha II","Tauá","1","pronto","","",1992-03-01,2025-09-08,8610,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0072.rds",139094
+77,"Frios","Umirim","8","pronto","","227 data(s) duplicada(s) nos niveis",1991-07-01,2026-04-23,12438,227,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0077.rds",190733
+210,"Gameleira","Itapipoca","11","pronto","","",2013-04-24,2026-04-23,4725,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0210.rds",119545
+169,"Gangorra","Granja","7","pronto","","83 data(s) duplicada(s) nos niveis",1999-03-01,2026-04-23,9257,83,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0169.rds",154367
+95,"Gavião","Pacatuba","10","pronto","","370 data(s) duplicada(s) nos niveis",1992-10-01,2026-04-23,11134,370,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0095.rds",177284
+7,"General Sampaio","General Sampaio","8","pronto","","367 data(s) duplicada(s) nos niveis",1989-01-01,2026-04-23,13089,367,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0007.rds",198091
+1123,"Gerardo Atimbone","Sobral","11","incompleto","parametros do vertedor incompletos","",2012-02-01,2025-09-08,4936,0,0,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_1123.rds",112648
+205,"Germinal","Palmácia","10","pronto","","",2017-07-01,2026-04-23,3219,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0205.rds",114330
+36,"Gomes","Mauriti","2","pronto","","64 data(s) duplicada(s) nos niveis",1992-02-19,2026-04-23,8762,64,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0036.rds",151683
+211,"Itapajé","Itapajé","8","pronto","","",2013-04-01,2026-04-23,4732,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0211.rds",107995
+244,"Itapebussu","Maranguape","10","pronto","","369 data(s) duplicada(s) nos niveis",2007-08-01,2026-04-23,7170,369,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0244.rds",146815
+180,"Itaúna","Granja","7","pronto","","272 data(s) duplicada(s) nos niveis",2001-05-01,2026-04-23,7610,272,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0180.rds",148628
+69,"Jaburu I","Ubajara","12","pronto","","38 data(s) duplicada(s) nos niveis",1992-08-24,2026-04-23,10921,38,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0069.rds",187702
+52,"Jaburu II","Independência","9","pronto","","97 data(s) duplicada(s) nos niveis",1992-05-01,2026-04-23,10838,97,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0052.rds",161549
+135,"Jatobá","Milhã","3","pronto","","",1999-10-01,2025-09-08,7555,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0135.rds",143322
+216,"Jatobá II","Ipueiras","6","pronto","","",2015-03-30,2026-04-23,4040,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0216.rds",105780
+171,"Jenipapeiro","Dep. Irapuan Pinheiro","4","pronto","","114 data(s) duplicada(s) nos niveis",1999-04-01,2026-04-23,9015,114,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0171.rds",151973
+1120,"Jenipapeiro II","Baixio","2","pronto","","",2012-02-01,2026-04-23,5187,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_1120.rds",109730
+213,"Jenipapo","Meruoca","6","pronto","","",2014-02-26,2026-04-23,4438,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0213.rds",105870
+121,"Jerimum","Irauçuba","8","pronto","","36 data(s) duplicada(s) nos niveis",1996-07-01,2026-04-23,9846,36,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0121.rds",167138
+147,"João Luís","Araripe","1","pronto","","",2014-03-01,2026-04-23,4435,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0147.rds",111548
+28,"Joaquim Távora","Jaguaribe","4","pronto","","294 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12804,294,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0028.rds",173110
+189,"Junco","Granjeiro","2","pronto","","",2010-03-17,2025-08-21,5108,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0189.rds",101643
+63,"Lima Campos","Icó","2","pronto","","377 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,15074,377,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,"reservatorios/reservatorio_0063.rds",198022
+199,"Macacos","Ibaretama","10","pronto","","368 data(s) duplicada(s) nos niveis",2008-04-01,2026-04-23,6956,368,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0199.rds",130072
+164,"Madeiro","Pereiro","4","pronto","","",1999-03-28,2025-09-08,7220,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0164.rds",128254
+235,"Malcozinhado","Cascavel","10","pronto","","264 data(s) duplicada(s) nos niveis",2003-01-21,2026-04-23,8683,264,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0235.rds",148426
+201,"Mamoeiro","Antonina do Norte","1","pronto","","",2013-04-01,2026-04-23,4719,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0201.rds",108597
+8,"Manoel Balbino","Juazeiro do Norte","2","pronto","","377 data(s) duplicada(s) nos niveis",1988-01-01,2026-04-23,14013,377,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0008.rds",191113
+1124,"Maranguapinho","Maranguape","10","pronto","","",2015-06-08,2026-04-23,3971,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_1124.rds",110720
+126,"Martinópole","Martinópole","7","pronto","","72 data(s) duplicada(s) nos niveis",1997-10-01,2026-04-23,8814,72,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0126.rds",151187
+1119,"Missi","Miraíma","11","pronto","","1 data(s) duplicada(s) nos niveis",2012-01-03,2026-04-23,5225,1,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_1119.rds",117906
+161,"Mons. Tabosa","Mons. Tabosa","3","pronto","","70 data(s) duplicada(s) nos niveis",1999-05-26,2026-04-23,9252,70,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0161.rds",147116
+206,"Monte Belo","Araripe","1","pronto","","",2014-01-01,2025-09-08,4224,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0206.rds",92089
+61,"Mundaú","Uruburetama","11","pronto","","100 data(s) duplicada(s) nos niveis",1990-01-01,2026-04-23,12944,100,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0061.rds",199610
+168,"Muquém","Cariús","1","pronto","","44 data(s) duplicada(s) nos niveis",2001-03-16,2026-04-23,8958,44,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0168.rds",154127
+26,"Nova Floresta","Jaguaribe","4","pronto","","396 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14884,396,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0026.rds",176894
+155,"Olho d'Água","Várzea Alegre","2","pronto","","93 data(s) duplicada(s) nos niveis",1999-03-27,2026-04-23,9700,93,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0155.rds",158658
+9,"Orós","Orós","1","pronto","","365 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14916,365,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,"reservatorios/reservatorio_0009.rds",215738
+80,"Pacajus","Pacajus","10","pronto","","371 data(s) duplicada(s) nos niveis",1992-04-01,2026-04-23,11643,371,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0080.rds",180265
+88,"Pacoti","Horizonte","10","pronto","","368 data(s) duplicada(s) nos niveis",1992-10-01,2026-04-23,11098,368,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0088.rds",186861
+89,"Parambu","Parambu","1","pronto","","120 data(s) duplicada(s) nos niveis",1993-06-26,2026-04-23,10030,120,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0089.rds",148892
+56,"Patos","Sobral","11","pronto","","348 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,13828,348,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0056.rds",179198
+10,"Patu","Senador Pompeu","3","pronto","","375 data(s) duplicada(s) nos niveis",1989-01-01,2026-04-23,13853,375,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0010.rds",196174
+148,"Pau Preto","Potengi","1","pronto","","234 data(s) duplicada(s) nos niveis",2004-01-28,2026-04-23,7565,234,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0148.rds",132303
+11,"Pedras Brancas","Quixadá","3","pronto","","428 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,15000,428,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0011.rds",194277
+179,"Penedo","Maranguape","10","pronto","","28 data(s) duplicada(s) nos niveis",2001-03-19,2026-04-23,8005,28,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0179.rds",154205
+12,"Pentecoste","Pentecoste","8","pronto","","353 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,15075,353,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0012.rds",201108
+192,"Pesqueiro","Capistrano","10","pronto","","361 data(s) duplicada(s) nos niveis",2008-01-01,2026-04-23,6847,361,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0192.rds",147838
+167,"Pirabibu","Quixeramobim","3","pronto","","369 data(s) duplicada(s) nos niveis",2001-10-01,2026-04-23,9308,369,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0167.rds",143213
+27,"Poço da Pedra","Campos Sales","1","pronto","","371 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12043,371,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0027.rds",163689
+67,"Poço do Barro","Morada Nova","3","pronto","","352 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,13716,352,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0067.rds",194762
+90,"Poço Verde","Itapipoca","11","pronto","","360 data(s) duplicada(s) nos niveis",1993-07-14,2026-04-23,9388,360,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0090.rds",159812
+13,"Pompeu Sobrinho","Choró","10","pronto","","368 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,13580,368,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0013.rds",185551
+82,"Potiretama","Potiretama","4","pronto","","115 data(s) duplicada(s) nos niveis",1993-06-08,2026-04-23,8633,115,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0082.rds",137662
+14,"Prazeres","Barro","2","pronto","","378 data(s) duplicada(s) nos niveis",1989-01-22,2026-04-23,12735,378,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0014.rds",196757
+62,"Premuoca","Uruoca","7","pronto","","65 data(s) duplicada(s) nos niveis",1987-03-11,2026-04-22,6701,65,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0062.rds",132946
+79,"Quandú","Itapipoca","11","pronto","","337 data(s) duplicada(s) nos niveis",1997-06-01,2026-04-23,10553,337,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0079.rds",161219
+68,"Quincoé","Acopiara","1","pronto","","322 data(s) duplicada(s) nos niveis",1992-07-20,2026-04-23,11571,322,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0068.rds",151882
+15,"Quixabinha","Mauriti","2","pronto","","311 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,10880,311,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0015.rds",170569
+16,"Quixeramobim","Quixeramobim","3","pronto","","222 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14770,222,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0016.rds",182447
+54,"Realejo","Crateús","9","pronto","","74 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12729,74,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0054.rds",180974
+117,"Riachão","Itaitinga","10","pronto","","371 data(s) duplicada(s) nos niveis",1989-01-01,2026-04-23,11437,371,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0117.rds",197989
+186,"Riacho da Serra","Alto Santo","4","pronto","","",2011-06-01,2026-04-23,5439,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0186.rds",124219
+17,"Riacho do Sangue","Solonópole","4","pronto","","351 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,13542,351,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0017.rds",179239
+174,"Rivaldo de Carvalho","Catarina","1","pronto","","47 data(s) duplicada(s) nos niveis",2001-04-10,2026-04-23,8752,47,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0174.rds",153315
+181,"Rosário","Lavras da Mangabeira","2","pronto","","68 data(s) duplicada(s) nos niveis",2001-10-01,2026-04-23,8768,68,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0181.rds",147123
+21,"S. Pedro Timbaúba","Miraíma","11","pronto","","305 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14853,305,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0021.rds",172468
+18,"Salão","Canindé","8","pronto","","363 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12560,363,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0018.rds",156180
+166,"Santa Maria","Ererê","4","pronto","","371 data(s) duplicada(s) nos niveis",1994-03-08,2026-04-23,8018,371,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0166.rds",138428
+55,"Santa Maria de Aracatiaçu","Sobral","11","pronto","","",1986-01-01,2025-09-08,12988,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0055.rds",163185
+233,"Santo Antônio","Iracema","4","pronto","","359 data(s) duplicada(s) nos niveis",2002-08-06,2026-04-23,8009,359,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0233.rds",134039
+50,"Santo Antônio de Aracatiaçu","Sobral","11","pronto","","17 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14626,17,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0050.rds",185803
+19,"Santo Antônio de Russas","Russas","5","pronto","","350 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,14193,350,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0019.rds",184002
+141,"São Domingos","Caridade","8","pronto","","322 data(s) duplicada(s) nos niveis",1997-09-01,2026-04-23,9481,322,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0141.rds",152119
+190,"São Domingos II","Caririaçu","2","pronto","","",2009-10-01,2026-04-23,5756,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0190.rds",114434
+39,"São José I","Boa Viagem","3","pronto","","100 data(s) duplicada(s) nos niveis",1992-01-01,2026-04-23,10256,100,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0039.rds",145826
+85,"São José II","Piquet Carneiro","3","pronto","","396 data(s) duplicada(s) nos niveis",1993-06-24,2026-04-23,9318,396,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0085.rds",150724
+185,"São José III","Ipaporanga","9","pronto","","3 data(s) duplicada(s) nos niveis",2009-12-01,2026-04-23,5987,3,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0185.rds",110623
+20,"São Mateus","Canindé","8","pronto","","316 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,12991,316,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0020.rds",171306
+81,"São Vicente","Santana do Acaraú","6","pronto","","38 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,9130,38,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0081.rds",163138
+99,"Serafim Dias","Mombaça","3","pronto","","146 data(s) duplicada(s) nos niveis",1996-06-01,2026-04-23,10563,146,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0099.rds",157779
+159,"Sitios Novos","Caucaia","10","pronto","","368 data(s) duplicada(s) nos niveis",1999-03-25,2026-04-23,9839,368,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0159.rds",164723
+22,"Sobral","Sobral","6","pronto","","224 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-22,13775,224,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0022.rds",178681
+160,"Sousa","Canindé","8","pronto","","210 data(s) duplicada(s) nos niveis",1999-03-26,2026-04-23,9319,210,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0160.rds",145980
+66,"Sucesso","Tamboril","9","pronto","","39 data(s) duplicada(s) nos niveis",1996-11-18,2026-04-23,6943,39,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0066.rds",136194
+254,"Taquara","Cariré","6","pronto","","",2011-01-17,2026-04-23,5528,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,"reservatorios/reservatorio_0254.rds",130356
+75,"Tatajuba","Icó","2","pronto","","243 data(s) duplicada(s) nos niveis",1999-03-28,2026-04-23,7657,243,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0075.rds",139266
+92,"Tejuçuoca","Tejuçuoca","8","pronto","","352 data(s) duplicada(s) nos niveis",1995-04-01,2026-04-23,10973,352,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0092.rds",175525
+23,"Thomás Osterne","Crato","2","pronto","","313 data(s) duplicada(s) nos niveis",1987-01-01,2026-04-23,14100,313,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0023.rds",193132
+111,"Tigre","Solonópole","4","pronto","","136 data(s) duplicada(s) nos niveis",2005-01-01,2026-04-23,7860,136,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0111.rds",141152
+132,"Tijuquinha","Baturité","10","pronto","","224 data(s) duplicada(s) nos niveis",2009-03-02,2026-04-23,6440,224,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0132.rds",135169
+96,"Trapiá II","Pedra Branca","3","pronto","","87 data(s) duplicada(s) nos niveis",1997-01-01,2026-04-23,10462,87,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0096.rds",161240
+129,"Trapiá III","Coreaú","7","pronto","","205 data(s) duplicada(s) nos niveis",1997-10-01,2026-04-23,7154,205,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0129.rds",147740
+24,"Trici","Tauá","1","pronto","","293 data(s) duplicada(s) nos niveis",1992-03-01,2026-04-23,12380,293,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0024.rds",171110
+122,"Trussu","Iguatu","1","pronto","","326 data(s) duplicada(s) nos niveis",1996-06-01,2026-04-23,10253,326,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0122.rds",182152
+58,"Tucunduba","Senador Sá","7","pronto","","302 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-22,13948,302,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0058.rds",175245
+162,"Ubaldinho","Cedro","2","pronto","","53 data(s) duplicada(s) nos niveis",1999-03-28,2026-04-23,9670,53,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0162.rds",157527
+191,"Umari","Madalena","3","pronto","","",2011-06-01,2026-04-23,5440,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0191.rds",115503
+110,"Valério","Altaneira","1","pronto","","80 data(s) duplicada(s) nos niveis",1998-03-19,2026-04-23,8036,80,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0110.rds",132975
+70,"Várzea da Volta","Moraújo","7","pronto","","288 data(s) duplicada(s) nos niveis",1986-01-01,2026-04-23,13765,288,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0070.rds",177175
+25,"Várzea do Boi","Tauá","1","pronto","","",1986-01-01,2025-09-08,11413,0,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0025.rds",154716
+130,"Vieirão","Boa Viagem","3","pronto","","353 data(s) duplicada(s) nos niveis",1998-01-01,2026-04-23,9584,353,0,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,"reservatorios/reservatorio_0130.rds",151048
