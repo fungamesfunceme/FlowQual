@@ -1845,7 +1845,10 @@ observeEvent(input$update, {
        "Jaburú 1" = "jab",
        "Orós" = "oro",
        "Olho Dágua" = "oda",
-       "Pacoti" = "pac"
+       "Pacoti" = "pac",
+       "Pedras Brancas" = "pbr",
+       "Pentecostes" = "pen",
+       "Rósario" = "ros"
      )
   
 
@@ -2021,6 +2024,22 @@ observeEvent(input$update, {
         
         diretorio_cequal <- contexto$diretorio_cequal
         dados_simulacao  <- contexto$dados_simulacao
+
+        if (identical(as.character(input$tipo_simulacao), "2")) {
+          perfil_observado_ok <- tentar_operacao_arquivo_shiny(
+            function() {
+              validar_arquivo_perfis_observados(
+                contexto$caminhos$diretorio,
+                contexto$configuracao$reservatorio
+              )
+              TRUE
+            },
+            caminho = contexto$caminhos$diretorio,
+            verbo = "localizar o arquivo de perfis observados",
+            session = session
+          )
+          if (is.null(perfil_observado_ok)) return(NULL)
+        }
 
         executavel_pre <- file.path(app_dir, "bin", "W2Pre3.7.exe")
         executavel_cequal <- file.path(app_dir, "bin", "w2_3.7_64.exe")
@@ -2546,7 +2565,7 @@ observeEvent(input$update, {
                                "2" = c(
                                  "Cota" = "Cota",
                                  "Temperatura Superfície" = "TEMP",
-                                # "Temperatura Perfil" = "TEMP",#"TEMPPERFIL",
+                                 "Temperatura Perfil" = "TEMPPERFIL",
                                  "Evaporação" = "EVAP"
                                ),
                                
@@ -2660,6 +2679,22 @@ observeEvent(input$update, {
      
      contexto <- preparar_contexto(input$tipo)
      if (is.null(contexto)) return(NULL)
+
+     if ("TEMPPERFIL" %in% input$vars_obj) {
+       perfil_observado_ok <- tentar_operacao_arquivo_shiny(
+         function() {
+           validar_arquivo_perfis_observados(
+             contexto$caminhos$diretorio,
+             contexto$configuracao$reservatorio
+           )
+           TRUE
+         },
+         caminho = contexto$caminhos$diretorio,
+         verbo = "localizar o arquivo de perfis observados",
+         session = session
+       )
+       if (is.null(perfil_observado_ok)) return(NULL)
+     }
      
      
      

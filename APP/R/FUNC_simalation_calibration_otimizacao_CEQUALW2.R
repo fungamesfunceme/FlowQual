@@ -400,6 +400,584 @@ preparar_arquivos_cequal <- function(
 }
 
   
+# -----------------------------------------------------------------------------
+# Perfis verticais de temperatura (observado x PRF)
+# -----------------------------------------------------------------------------
+
+extrair_numeros_prf <- function(texto) {
+  encontrados <- stringr::str_extract_all(
+    texto,
+    "[-+]?(?:[0-9]*\\.?[0-9]+)(?:[Ee][-+]?[0-9]+)?"
+  )[[1]]
+  suppressWarnings(as.numeric(encontrados))
+}
+
+
+normalizar_utf8_prf <- function(texto) {
+  convertido <- suppressWarnings(iconv(texto, from = "", to = "UTF-8", sub = ""))
+  invalidos <- is.na(convertido)
+  if (any(invalidos)) {
+    convertido[invalidos] <- suppressWarnings(iconv(
+      texto[invalidos],
+      from = "windows-1252",
+      to = "UTF-8",
+      sub = ""
+    ))
+  }
+  convertido[is.na(convertido)] <- ""
+  convertido
+}
+
+
+ler_prf_temperatura <- function(arquivo_prf) {
+  if (!file.exists(arquivo_prf)) {
+    stop("Arquivo prf.opt não encontrado: ", arquivo_prf, call. = FALSE)
+  }
+
+  linhas <- ler_linhas_seguro(
+    arquivo_prf,
+    warn = FALSE,
+    descricao = "arquivo de perfis PRF"
+  )
+  # Arquivos do CE-QUAL-W2 podem trazer símbolos como ° em Windows-1252.
+  # A análise usa somente marcadores ASCII, mas stringr exige texto UTF-8 válido.
+  linhas <- normalizar_utf8_prf(linhas)
+
+  linha_execucao <- grep("^Model run at", trimws(linhas), ignore.case = TRUE)[1]
+  if (is.na(linha_execucao) || linha_execucao >= length(linhas)) {
+    stop("Cabeçalho do prf.opt não reconhecido.", call. = FALSE)
+  }
+
+  linha_config <- linha_execucao + 1L
+  config <- extrair_numeros_prf(linhas[linha_config])
+  if (length(config) < 2L) {
+    stop("Configuração numérica do prf.opt não reconhecida.", call. = FALSE)
+  }
+
+  kmx <- as.integer(config[1])
+  n_segmentos_prf <- as.integer(config[2])
+  segmentos <- as.integer(extrair_numeros_prf(linhas[linha_config + 1L]))
+  segmentos <- segmentos[seq_len(min(length(segmentos), n_segmentos_prf))]
+
+  if (!length(segmentos)) {
+    stop("Nenhum segmento foi identificado no prf.opt.", call. = FALSE)
+  }
+
+  primeira_temp <- grep("^\\s*TEMP\\s+[-+]?\\d+\\s*$", linhas)[1]
+  if (is.na(primeira_temp)) {
+    stop("Nenhum bloco TEMP foi encontrado no prf.opt.", call. = FALSE)
+  }
+
+  numeros_cabecalho <- unlist(lapply(
+    linhas[seq.int(linha_config + 2L, primeira_temp - 1L)],
+    extrair_numeros_prf
+  ))
+  if (length(numeros_cabecalho) < kmx) {
+    stop("Alturas das camadas não foram identificadas no prf.opt.", call. = FALSE)
+  }
+  alturas_camadas <- tail(numeros_cabecalho, kmx)
+
+  meses <- c(
+    Jan = 1L, Feb = 2L, Mar = 3L, Apr = 4L, May = 5L, Jun = 6L,
+    Jul = 7L, Aug = 8L, Sep = 9L, Oct = 10L, Nov = 11L, Dec = 12L
+  )
+  padrao_data <- paste0(
+    "^\\s*([0-9]+(?:\\.[0-9]+)?)\\s+([A-Za-z]{3})\\s+",
+    "([0-9]{1,2}),\\s+([0-9]{4})\\s+([0-9]+)\\s+",
+    "([-+]?[0-9]*\\.?[0-9]+)\\s+([0-9]+)\\s*$"
+  )
+
+  resultado <- list()
+  data_atual <- NULL
+  jday_atual <- NA_real_
+  camada_superficie <- NA_integer_
+  desvio_superficie <- NA_real_
+  indice_temp <- 0L
+  i <- primeira_temp
+
+  while (i <= length(linhas)) {
+    casamento_data <- stringr::str_match(linhas[i], padrao_data)
+    if (!is.na(casamento_data[1, 1])) {
+      mes <- meses[[casamento_data[1, 3]]]
+      if (!is.null(mes)) {
+        data_atual <- as.Date(sprintf(
+          "%04d-%02d-%02d",
+          as.integer(casamento_data[1, 5]), mes,
+          as.integer(casamento_data[1, 4])
+        ))
+      }
+      jday_atual <- as.numeric(casamento_data[1, 2])
+      camada_superficie <- as.integer(casamento_data[1, 6])
+      desvio_superficie <- as.numeric(casamento_data[1, 7])
+      indice_temp <- 0L
+      i <- i + 1L
+      next
+    }
+
+    casamento_temp <- stringr::str_match(
+      linhas[i],
+      "^\\s*TEMP\\s+([-+]?\\d+)\\s*$"
+    )
+    if (!is.na(casamento_temp[1, 1])) {
+      numero_camadas <- as.integer(casamento_temp[1, 2])
+
+      # Os blocos anteriores à primeira data são condições iniciais. Contagens
+      # negativas representam perfil indisponível e não contêm valores úteis.
+      if (!is.null(data_atual)) {
+        indice_temp <- indice_temp + 1L
+      }
+      segmento_atual <- segmentos[((max(indice_temp, 1L) - 1L) %% length(segmentos)) + 1L]
+
+      if (!is.null(data_atual) && numero_camadas > 0L) {
+        valores <- numeric()
+        j <- i + 1L
+        while (j <= length(linhas) && length(valores) < numero_camadas) {
+          if (grepl(padrao_data, linhas[j]) ||
+              grepl("^\\s*[A-Za-z][A-Za-z0-9_]*\\s+[-+]?\\d+\\s*$", linhas[j])) {
+            break
+          }
+          valores <- c(valores, extrair_numeros_prf(linhas[j]))
+          j <- j + 1L
+        }
+
+        if (length(valores) >= numero_camadas &&
+            is.finite(camada_superficie) && camada_superficie >= 1L) {
+          valores <- valores[seq_len(numero_camadas)]
+          fim <- min(kmx, camada_superficie + numero_camadas - 1L)
+          dz <- alturas_camadas[camada_superficie:fim]
+          n_util <- min(length(dz), length(valores))
+          dz <- dz[seq_len(n_util)]
+          valores <- valores[seq_len(n_util)]
+
+          espessura_superficial <- dz[1] - desvio_superficie
+          profundidades <- numeric(n_util)
+          profundidades[1] <- espessura_superficial / 2
+          if (n_util > 1L) {
+            for (k in 2:n_util) {
+              espessuras_anteriores <- if (k > 2L) sum(dz[2:(k - 1L)]) else 0
+              profundidades[k] <- espessura_superficial +
+                espessuras_anteriores + dz[k] / 2
+            }
+          }
+
+          resultado[[length(resultado) + 1L]] <- tibble::tibble(
+            Date = data_atual,
+            JDAY = jday_atual,
+            Segmento = segmento_atual,
+            depth = profundidades,
+            value = valores
+          )
+        }
+        i <- max(i + 1L, j)
+        next
+      }
+    }
+    i <- i + 1L
+  }
+
+  if (!length(resultado)) {
+    stop(
+      "O prf.opt não contém blocos TEMP válidos com valores positivos de camadas.",
+      call. = FALSE
+    )
+  }
+
+  dplyr::bind_rows(resultado) |>
+    dplyr::filter(is.finite(depth), is.finite(value)) |>
+    dplyr::arrange(Date, Segmento, depth)
+}
+
+
+normalizar_cabecalho_perfil <- function(x) {
+  x <- normalizar_utf8_prf(as.character(x))
+  x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT", sub = "")
+  x <- tolower(x)
+  gsub("[^a-z0-9]+", "_", x)
+}
+
+
+converter_data_hora_perfil <- function(data, hora = NULL, tz = "America/Fortaleza") {
+  if (inherits(data, "POSIXt")) return(as.POSIXct(data, tz = tz))
+
+  data_num <- suppressWarnings(as.numeric(data))
+  hora_num <- if (is.null(hora)) 0 else suppressWarnings(as.numeric(hora))
+  serial <- data_num + ifelse(is.finite(hora_num), hora_num, 0)
+  saida <- as.POSIXct(rep(NA_real_, length(data)), origin = "1970-01-01", tz = tz)
+  idx_serial <- is.finite(serial)
+  saida[idx_serial] <- as.POSIXct(
+    (serial[idx_serial] - 25569) * 86400,
+    origin = "1970-01-01",
+    tz = tz
+  )
+
+  idx_texto <- !idx_serial
+  if (any(idx_texto)) {
+    texto <- trimws(paste(
+      as.character(data[idx_texto]),
+      if (is.null(hora)) "" else as.character(hora[idx_texto])
+    ))
+    saida[idx_texto] <- lubridate::parse_date_time(
+      texto,
+      c("d/m/Y H:M:S", "d/m/Y H:M", "Y-m-d H:M:S", "m/d/Y H:M:S"),
+      tz = tz,
+      quiet = TRUE
+    )
+  }
+  saida
+}
+
+
+ler_perfis_observados <- function(dir_meas, sim_start, sim_end,
+                                  tz = "America/Fortaleza") {
+  if (file.exists(dir_meas) && !dir.exists(dir_meas)) {
+    arquivos <- dir_meas
+  } else if (dir.exists(dir_meas)) {
+    arquivos <- list.files(
+      dir_meas,
+      pattern = "\\.xlsx?$",
+      full.names = TRUE,
+      ignore.case = TRUE
+    )
+  } else {
+    stop("Fonte de perfis observados não encontrada: ", dir_meas, call. = FALSE)
+  }
+  if (!length(arquivos)) {
+    stop("Nenhum arquivo .xls ou .xlsx foi encontrado em ", dir_meas, call. = FALSE)
+  }
+
+  ler_arquivo <- function(arquivo) {
+    abas <- readxl::excel_sheets(arquivo)
+    aba_banco <- abas[tolower(abas) == "banco_perfis"]
+    aba_perfil <- abas[tolower(abas) == "perfil"]
+    abas_ler <- if (length(aba_banco)) {
+      aba_banco[1]
+    } else if (length(aba_perfil)) {
+      aba_perfil[1]
+    } else {
+      abas
+    }
+
+    purrr::map_dfr(abas_ler, function(aba) {
+      if (tolower(aba) == "banco_perfis") {
+        df <- readxl::read_excel(arquivo, sheet = aba)
+      } else {
+        amostra <- readxl::read_excel(arquivo, sheet = aba, col_names = FALSE, n_max = 15)
+        linhas <- apply(amostra, 1, function(x) {
+          nomes_linha <- normalizar_cabecalho_perfil(x)
+          sum(grepl("data|date|datetime|prof|depth|temp", nomes_linha))
+        })
+        linha_cabecalho <- which.max(linhas)
+        df <- readxl::read_excel(
+          arquivo,
+          sheet = aba,
+          skip = linha_cabecalho - 1L,
+          col_names = TRUE
+        )
+      }
+
+      nomes <- normalizar_cabecalho_perfil(names(df))
+      localizar <- function(padrao) {
+        achado <- grep(padrao, nomes)[1]
+        if (is.na(achado)) NULL else achado
+      }
+
+      col_datetime <- localizar("^data_hora$|^data_horario|^datetime$")
+      col_data <- localizar("^date|^data$")
+      col_hora <- localizar("^time|^hora$")
+      col_prof <- localizar("profundidade|^prof_|^prof$|depth")
+      col_temp <- localizar("temperatura.*agua|^temp_|^temp$|temp_c")
+
+      if (is.null(col_prof) || is.null(col_temp) ||
+          (is.null(col_datetime) && is.null(col_data))) {
+        return(tibble::tibble())
+      }
+
+      if (!is.null(col_datetime)) {
+        dt <- converter_data_hora_perfil(df[[col_datetime]], tz = tz)
+      } else {
+        dt <- converter_data_hora_perfil(
+          df[[col_data]],
+          if (is.null(col_hora)) NULL else df[[col_hora]],
+          tz = tz
+        )
+      }
+
+      tibble::tibble(
+        datetime_meas = dt,
+        date = as.Date(dt, tz = tz),
+        prof_m = suppressWarnings(as.numeric(df[[col_prof]])),
+        temp_C = suppressWarnings(as.numeric(df[[col_temp]])),
+        arquivo_origem = basename(arquivo),
+        aba_origem = aba
+      )
+    })
+  }
+
+  purrr::map_dfr(arquivos, ler_arquivo) |>
+    dplyr::filter(
+      !is.na(date), is.finite(prof_m), is.finite(temp_C),
+      date >= as.Date(sim_start), date <= as.Date(sim_end)
+    ) |>
+    dplyr::distinct(date, prof_m, temp_C, .keep_all = TRUE)
+}
+
+
+parear_perfis_temperatura <- function(df_meas, df_prf, segmento) {
+  df_prf <- df_prf |> dplyr::filter(Segmento == as.integer(segmento))
+  if (!nrow(df_prf)) {
+    stop("O segmento ", segmento, " não possui perfis de temperatura no spr.opt.", call. = FALSE)
+  }
+
+  sim_por_dia <- split(df_prf, df_prf$Date)
+  sim_por_dia <- lapply(sim_por_dia, function(x) x[order(x$depth), , drop = FALSE])
+
+  purrr::pmap_dfr(
+    list(df_meas$date, df_meas$datetime_meas, df_meas$prof_m, df_meas$temp_C),
+    function(data_medida, data_hora, profundidade, temperatura) {
+      perfil <- sim_por_dia[[as.character(data_medida)]]
+      if (is.null(perfil) || nrow(perfil) < 2L) return(tibble::tibble())
+
+      tibble::tibble(
+        Date = as.Date(data_medida),
+        Hora_Medida = data_hora,
+        Profundidade_Medida = profundidade,
+        Temp_Medida = temperatura,
+        Temp_Simulada = stats::approx(
+          x = perfil$depth,
+          y = perfil$value,
+          xout = profundidade,
+          rule = 2,
+          ties = mean
+        )$y
+      )
+    }
+  )
+}
+
+
+ler_spr_temperatura <- function(arquivo_spr, ano_simul, segmento) {
+  if (!file.exists(arquivo_spr)) {
+    stop("Arquivo spr.opt não encontrado: ", arquivo_spr, call. = FALSE)
+  }
+
+  cabecalho <- readLines(
+    arquivo_spr,
+    n = 1L,
+    warn = FALSE,
+    encoding = "windows-1252"
+  )
+  cabecalho <- normalizar_utf8_prf(cabecalho)
+  if (!length(cabecalho) || !nzchar(trimws(cabecalho))) {
+    stop(
+      "O arquivo spr.opt existe, mas não contém resultados. Verifique a configuração da saída SPR no w2_con.npt.",
+      call. = FALSE
+    )
+  }
+
+  segmentos <- stringr::str_match_all(
+    cabecalho[1],
+    stringr::regex("SEG[_ ]*([0-9]+)", ignore_case = TRUE)
+  )[[1]]
+  segmentos <- if (nrow(segmentos)) as.integer(segmentos[, 2]) else integer()
+  posicao_segmento <- match(as.integer(segmento), segmentos)
+  if (is.na(posicao_segmento)) {
+    stop(
+      "O segmento ", segmento, " não foi encontrado no cabeçalho do spr.opt. ",
+      "Segmentos disponíveis: ",
+      if (length(segmentos)) paste(segmentos, collapse = ", ") else "nenhum",
+      ".",
+      call. = FALSE
+    )
+  }
+
+  # O cabeçalho SPR possui um rótulo Elevation adicional; por isso os dados são
+  # lidos sem usar o cabeçalho e as posições são calculadas pela ordem dos SEG.
+  dados_spr <- suppressWarnings(readr::read_table(
+    arquivo_spr,
+    skip = 1L,
+    col_names = FALSE,
+    show_col_types = FALSE,
+    progress = FALSE,
+    na = c("", "NA")
+  ))
+  if (!nrow(dados_spr)) {
+    stop(
+      "O arquivo spr.opt existe, mas não contém resultados. Verifique a configuração da saída SPR no w2_con.npt.",
+      call. = FALSE
+    )
+  }
+
+  coluna_elevacao <- 4L + 2L * (posicao_segmento - 1L)
+  coluna_valor <- coluna_elevacao + 1L
+  if (ncol(dados_spr) < coluna_valor) {
+    stop("Estrutura de colunas inválida no spr.opt.", call. = FALSE)
+  }
+
+  resultado <- tibble::tibble(
+    Constituinte = as.character(dados_spr[[1]]),
+    JDAY = suppressWarnings(as.numeric(dados_spr[[2]])),
+    depth = suppressWarnings(as.numeric(dados_spr[[3]])),
+    Elevation = suppressWarnings(as.numeric(dados_spr[[coluna_elevacao]])),
+    value = suppressWarnings(as.numeric(dados_spr[[coluna_valor]]))
+  ) |>
+    dplyr::filter(
+      tolower(Constituinte) == "temperature",
+      is.finite(JDAY), is.finite(depth), is.finite(value),
+      value > -90
+    ) |>
+    dplyr::mutate(
+      Date = as.Date(floor(JDAY) - 1, origin = paste0(as.integer(ano_simul), "-01-01")),
+      Segmento = as.integer(segmento)
+    ) |>
+    dplyr::select(Date, JDAY, Segmento, depth, value, Elevation) |>
+    dplyr::arrange(Date, depth)
+
+  if (!nrow(resultado)) {
+    stop(
+      "O spr.opt não contém linhas válidas de Temperature para o segmento ",
+      segmento,
+      ". Verifique a configuração da saída SPR no w2_con.npt.",
+      call. = FALSE
+    )
+  }
+  resultado
+}
+
+
+identificar_arquivo_perfis <- function(dir, reserv_sigla) {
+  pasta_modelo <- normalizePath(dir, winslash = "/", mustWork = FALSE)
+  reserv_sigla <- tolower(trimws(as.character(reserv_sigla)[1]))
+  if (!nzchar(reserv_sigla) || is.na(reserv_sigla) ||
+      !grepl("^[a-z0-9]+$", reserv_sigla)) {
+    stop(
+      "Sigla interna do reservatório ausente ou inválida para localizar os perfis. ",
+      "Pasta do modelo: '", pasta_modelo, "'.",
+      call. = FALSE
+    )
+  }
+  nome_arquivo_perfis <- paste0("Perfis_", reserv_sigla, ".xlsx")
+
+  list(
+    pasta_modelo = pasta_modelo,
+    nome_arquivo = nome_arquivo_perfis,
+    caminho = file.path(pasta_modelo, nome_arquivo_perfis)
+  )
+}
+
+
+validar_arquivo_perfis_observados <- function(dir, reserv_sigla) {
+  arquivo_perfis <- identificar_arquivo_perfis(dir, reserv_sigla)
+  if (!file.exists(arquivo_perfis$caminho)) {
+    stop(
+      "Arquivo de perfis observados não encontrado. Arquivo esperado: '",
+      arquivo_perfis$nome_arquivo,
+      "'. Pasta pesquisada: '",
+      arquivo_perfis$pasta_modelo,
+      "'.",
+      call. = FALSE
+    )
+  }
+  arquivo_perfis
+}
+
+
+localizar_arquivo_spr_controle <- function(dir) {
+  arquivo_controle <- file.path(dir, "w2_con.npt")
+  linhas_controle <- ler_linhas_seguro(
+    arquivo_controle,
+    warn = FALSE,
+    descricao = "arquivo de controle"
+  )
+  nome_spr <- localiza_arquivo(linhas_controle, "SPR FILE")
+  if (length(nome_spr) != 1L || is.na(nome_spr) || !nzchar(nome_spr)) {
+    stop(
+      "Não foi possível identificar o arquivo SPR na seção 'SPR FILE' de '",
+      arquivo_controle,
+      "'.",
+      call. = FALSE
+    )
+  }
+  file.path(dir, nome_spr)
+}
+
+
+calcular_perfis_temperatura <- function(dir, segmento, reserv_sigla, ano_simul,
+                                        tz = "America/Fortaleza") {
+  arquivo_spr <- localizar_arquivo_spr_controle(dir)
+  df_spr <- ler_spr_temperatura(arquivo_spr, ano_simul, segmento)
+
+  arquivo_perfis <- validar_arquivo_perfis_observados(dir, reserv_sigla)
+  pasta_modelo <- arquivo_perfis$pasta_modelo
+  nome_arquivo_perfis <- arquivo_perfis$nome_arquivo
+  fonte_perfis <- arquivo_perfis$caminho
+
+  medidas <- ler_perfis_observados(
+    fonte_perfis,
+    min(df_spr$Date), max(df_spr$Date), tz
+  )
+  pareado <- parear_perfis_temperatura(medidas, df_spr, segmento)
+  if (!nrow(pareado)) {
+    stop("Não existem datas coincidentes entre o spr.opt e os perfis observados.", call. = FALSE)
+  }
+
+  rmse_diario <- pareado |>
+    dplyr::mutate(Erro_Quad = (Temp_Medida - Temp_Simulada)^2) |>
+    dplyr::group_by(Date) |>
+    dplyr::summarise(
+      RMSE = sqrt(mean(Erro_Quad, na.rm = TRUE)),
+      .groups = "drop"
+    )
+
+  fo3 <- sqrt(mean(rmse_diario$RMSE^2, na.rm = TRUE))
+  if (!is.finite(fo3)) stop("FO3 do perfil de temperatura é inválido.", call. = FALSE)
+
+  list(FO3 = fo3, df_paired = pareado, rmse_diario = rmse_diario, df_spr = df_spr)
+}
+
+
+plot_perf_temp <- function(df_paired, xlim_temp = NULL, ylim_depth = NULL) {
+  if (is.null(xlim_temp)) {
+    faixa <- range(c(df_paired$Temp_Medida, df_paired$Temp_Simulada), na.rm = TRUE)
+    margem <- max(diff(faixa) * 0.05, 0.5)
+    xlim_temp <- faixa + c(-margem, margem)
+  }
+  if (is.null(ylim_depth)) {
+    ylim_depth <- c(max(df_paired$Profundidade_Medida, na.rm = TRUE) * 1.05, 0)
+  }
+
+  datas <- sort(unique(as.Date(df_paired$Date)))
+  plots <- list()
+  for (data_atual in datas) {
+    sub <- df_paired |> dplyr::filter(as.Date(Date) == as.Date(data_atual))
+    if (nrow(sub) < 2L) next
+    rmse_dia <- sqrt(mean((sub$Temp_Medida - sub$Temp_Simulada)^2, na.rm = TRUE))
+    df_plot <- dplyr::bind_rows(
+      sub |> dplyr::transmute(depth = Profundidade_Medida, temp = Temp_Medida, serie = "Medida"),
+      sub |> dplyr::transmute(depth = Profundidade_Medida, temp = Temp_Simulada, serie = "Simulada")
+    )
+    plots[[as.character(data_atual)]] <- ggplot2::ggplot(
+      df_plot,
+      ggplot2::aes(x = temp, y = depth, color = serie)
+    ) +
+      ggplot2::geom_path(linewidth = 0.9) +
+      ggplot2::geom_point(
+        data = df_plot |> dplyr::filter(serie == "Medida"),
+        size = 1.8
+      ) +
+      ggplot2::scale_x_continuous(limits = xlim_temp) +
+      ggplot2::scale_y_reverse(limits = ylim_depth) +
+      ggplot2::scale_color_manual(values = c(Medida = "black", Simulada = "red")) +
+      ggplot2::labs(
+        title = sprintf("%s | RMSE %.2f °C", format(as.Date(data_atual), "%d/%m/%Y"), rmse_dia),
+        x = "Temperatura (°C)", y = "Profundidade (m)", color = NULL
+      ) +
+      ggplot2::theme_minimal(base_size = 10) +
+      ggplot2::theme(legend.position = "bottom", plot.title = ggplot2::element_text(size = 9))
+  }
+  plots
+}
+
+
 processar_resultados_cequal <- function(
     simul,
     diretorio_cequal = NULL,
@@ -432,6 +1010,11 @@ processar_resultados_cequal <- function(
     ),
     environment()
   )
+  reserv_sigla_perfil <- if (!is.null(contexto)) {
+    contexto$configuracao$reservatorio
+  } else {
+    res
+  }
   diretorio_resultados <- file.path(dir, paste0("resultados_tipo", tipo))
   if (!is.null(subpasta_resultados) && nzchar(subpasta_resultados)) {
     diretorio_resultados <- file.path(
@@ -451,12 +1034,10 @@ processar_resultados_cequal <- function(
   arquivo_f=paste0(dir,"/FLOWBAL.OPT")
   arquivo_s=paste0(dir,"/shade.prn")
   arquivo_w=paste0(dir,"/wsc.prn")
-  arquivo_snp=paste0(dir,"/arquivo_snp.OPT")
-  
-    
   linhas <- ler_linhas_seguro(arquivo_c, warn = FALSE, descricao = "arquivo de controle")
   arquivo_bath=localiza_arquivo(linhas, "BTH FILE")
   arquivo_b= file.path(dir, arquivo_bath)
+  arquivo_spr=localizar_arquivo_spr_controle(dir)
 
   
   
@@ -546,10 +1127,30 @@ processar_resultados_cequal <- function(
   nse <- function(obs, sim) {
     ok <- suppressWarnings(is.finite(sim) & is.finite(obs) & (sim >= 0) & (obs >= 0))
     if (!any(ok)) return(NA_real_)
-    1 - sum((sim[ok] - obs[ok])^2) / sum((obs[ok] - mean(obs[ok]))^2)
+    denominador <- sum((obs[ok] - mean(obs[ok]))^2)
+    if (!is.finite(denominador) || denominador == 0) return(NA_real_)
+    1 - sum((sim[ok] - obs[ok])^2) / denominador
+  }
+
+  # 5) Kling-Gupta Efficiency
+  kge <- function(obs, sim) {
+    ok <- suppressWarnings(is.finite(sim) & is.finite(obs) & (sim >= 0) & (obs >= 0))
+    if (sum(ok) < 2L) return(NA_real_)
+    obs_ok <- obs[ok]
+    sim_ok <- sim[ok]
+    media_obs <- mean(obs_ok)
+    sd_obs <- stats::sd(obs_ok)
+    if (!is.finite(media_obs) || media_obs == 0 || !is.finite(sd_obs) || sd_obs == 0) {
+      return(NA_real_)
+    }
+    r <- suppressWarnings(stats::cor(sim_ok, obs_ok))
+    alpha <- stats::sd(sim_ok) / sd_obs
+    beta <- mean(sim_ok) / media_obs
+    if (!all(is.finite(c(r, alpha, beta)))) return(NA_real_)
+    1 - sqrt((r - 1)^2 + (alpha - 1)^2 + (beta - 1)^2)
   }
   
-  # 5) Skill (comparação com baseline, p. ex. persistência ou interpolação)
+  # 6) Skill (comparação com baseline, p. ex. persistência ou interpolação)
   skill_vs <- function(sim, obs, base_pred) {
     ok <- suppressWarnings(is.finite(sim) & is.finite(obs) & is.finite(base_pred) &
       (sim >= 0) & (obs >= 0) & (base_pred >= 0))
@@ -630,17 +1231,17 @@ processar_resultados_cequal <- function(
       nse(do_obs, do_model),
       nse(chla_obs, chla_model)
     ),
-    
-    # KGE = c(
-    #julian_day_ini,
-    #julian_day_fim,
-    #   kge(cota_model, cota_obs),
-    #   kge(temp_model, temp_obs),
-    #   kge(evap_model, evap_obs),
-    #   kge(fosfato_model, fosfato_obs),
-    #   kge(do_model, do_obs),
-    #   kge(chla_model, chla_obs)
-    # ),
+
+    KGE = c(
+      julian_day_ini,
+      julian_day_fim,
+      kge(cota_obs, cota_model),
+      kge(temp_obs, temp_model),
+      kge(evap_obs, evap_model),
+      kge(fosfato_obs, fosfato_model),
+      kge(do_obs, do_model),
+      kge(chla_obs, chla_model)
+    ),
     
     Skill_Persistencia = c(
       julian_day_ini,
@@ -653,6 +1254,58 @@ processar_resultados_cequal <- function(
       skill_vs(chla_model, chla_obs, chla_obs_start)
     )
   )
+
+  # O perfil é necessário para a simulação tipo 2 e para o objetivo TEMPPERFIL.
+  # A ausência de um perfil válido interrompe a otimização, mas não impede que os
+  # demais gráficos da simulação sejam produzidos.
+  perfil_solicitado <-
+    (identical(as.integer(tipo), 2L) && identical(as.integer(salvar_figura), 1L)) ||
+    "TEMPPERFIL" %in% varsobj
+  perfil_temperatura <- NULL
+  if (perfil_solicitado) {
+    perfil_temperatura <- tryCatch(
+      calcular_perfis_temperatura(dir, seg, reserv_sigla_perfil, ano_simul),
+      error = function(e) {
+        if ("TEMPPERFIL" %in% varsobj) {
+          stop(conditionMessage(e), call. = FALSE)
+        }
+        if (!is.null(shiny::getDefaultReactiveDomain())) {
+          shiny::showNotification(
+            conditionMessage(e),
+            type = "warning",
+            duration = 10
+          )
+        }
+        warning(
+          "Não foi possível calcular/plotar o perfil de temperatura: ",
+          conditionMessage(e),
+          call. = FALSE
+        )
+        NULL
+      }
+    )
+  }
+
+  if (!is.null(perfil_temperatura)) {
+    perfil_obs <- perfil_temperatura$df_paired$Temp_Medida
+    perfil_sim <- perfil_temperatura$df_paired$Temp_Simulada
+    metricas <- dplyr::bind_rows(
+      metricas,
+      tibble::tibble(
+        variavel = "Temperatura Perfil",
+        RMSE = perfil_temperatura$FO3,
+        MAE = mae(perfil_sim, perfil_obs),
+        Bias = bias(perfil_sim, perfil_obs),
+        NSE = nse(perfil_obs, perfil_sim),
+        KGE = kge(perfil_obs, perfil_sim),
+        Skill_Persistencia = skill_vs(
+          perfil_sim,
+          perfil_obs,
+          make_persist(perfil_obs)
+        )
+      )
+    )
+  }
   
 
 
@@ -738,9 +1391,9 @@ processar_resultados_cequal <- function(
       "arquivo wsc"
     )
     copiar_resultado(
-      file.path(dir, "snp.OPT"),
-      file.path(diretorio_resultados, paste0("snp_simul_", simul, ".opt")),
-      "arquivo snp"
+      arquivo_spr,
+      file.path(diretorio_resultados, paste0("spr_simul_", simul, ".opt")),
+      "arquivo de perfis SPR"
     )
    
   }
@@ -761,6 +1414,7 @@ processar_resultados_cequal <- function(
                                  "mae"   = "MAE",
                                  "rmse"  = "RMSE",
                                  "nse"   = "NSE",
+                                 "kge"   = "KGE",
                                  "bias"  = "Bias",
                                  "skill" = "Skill_Persistencia")
            
@@ -814,6 +1468,28 @@ processar_resultados_cequal <- function(
                 base_cex = 1.2)
 
       dev.off()
+
+      if (identical(as.integer(tipo), 2L) && !is.null(perfil_temperatura)) {
+        graficos_perfil <- plot_perf_temp(perfil_temperatura$df_paired)
+        if (length(graficos_perfil)) {
+          arquivo_figura_perfil <- file.path(
+            diretorio_resultados,
+            paste0("perfis_temperatura_", simul, ".png")
+          )
+          validar_arquivo_para_gravacao(
+            arquivo_figura_perfil,
+            "figura dos perfis de temperatura"
+          )
+          ggplot2::ggsave(
+            filename = arquivo_figura_perfil,
+            plot = patchwork::wrap_plots(graficos_perfil, ncol = 4),
+            width = 16,
+            height = max(6, ceiling(length(graficos_perfil) / 4) * 4),
+            units = "in",
+            dpi = 300
+          )
+        }
+      }
       
       
   }
@@ -896,7 +1572,8 @@ processar_resultados_cequal <- function(
   }
 
   return(list(
-    metricas = metricas
+    metricas = metricas,
+    perfil_temperatura = perfil_temperatura
   ))
   
 }
@@ -919,6 +1596,13 @@ Otmiza_Quali <- function(x, contexto, diretorio_cequal, varsobj, objfun, windows
       "\n"
     )
     rep(10^6, length(varsobj))
+  }
+
+  if ("TEMPPERFIL" %in% varsobj) {
+    validar_arquivo_perfis_observados(
+      contexto$caminhos$diretorio,
+      contexto$configuracao$reservatorio
+    )
   }
 
   if (isFALSE(windows)) {
@@ -1059,6 +1743,8 @@ Otmiza_Quali <- function(x, contexto, diretorio_cequal, varsobj, objfun, windows
           salvar_figura = 0,
           salvar_resultados = 0,
           simul_aleatoria = 0,
+          varsobj = varsobj,
+          objfun = objfun,
           contexto = contexto_janela
         ),
         error = function(e) {
@@ -1092,6 +1778,7 @@ Otmiza_Quali <- function(x, contexto, diretorio_cequal, varsobj, objfun, windows
         MAE = mean(MAE, na.rm = TRUE),
         Bias = mean(Bias, na.rm = TRUE),
         NSE = mean(NSE, na.rm = TRUE),
+        KGE = mean(KGE, na.rm = TRUE),
         Skill_Persistencia = mean(Skill_Persistencia, na.rm = TRUE),
         .groups = "drop"
       )
@@ -1105,22 +1792,27 @@ Otmiza_Quali <- function(x, contexto, diretorio_cequal, varsobj, objfun, windows
   variaveis_tabela <- info_obj$variaveis_tabela
   col_metrica      <- info_obj$col_metrica
   
-  FO <- metricas |>
-    dplyr::filter(variavel %in% variaveis_tabela) |>
-    dplyr::mutate(variavel = factor(variavel, levels = variaveis_tabela)) |>
-    dplyr::arrange(variavel) |>
-    dplyr::pull(.data[[col_metrica]])
+  FO <- purrr::map_dbl(
+    variaveis_tabela,
+    function(nome_variavel) {
+      valor <- metricas |>
+        dplyr::filter(variavel == nome_variavel) |>
+        dplyr::pull(.data[[col_metrica]])
+
+      if (length(valor) != 1L) return(NA_real_)
+      if (objfun %in% c("nse", "kge", "skill")) {
+        valor <- -valor
+      }
+      as.numeric(valor)
+    }
+  )
   
   if (length(FO) != length(varsobj)) {
     stop("O número de objetivos retornados não coincide com o número de variáveis selecionadas.")
   }
   
-  if (objfun %in% c("nse", "skill")) {
-    FO <- -FO
-  }
-
-  # Mantém a penalidade positiva após a conversão das métricas maximizadas
-  # (NSE e skill) para o problema de minimização.
+  # Mantém a penalidade positiva após converter NSE, KGE e skill (métricas de
+  # maximização) para o problema de minimização.
   FO[!is.finite(FO)] <- 10^6
   
   cat(
@@ -1150,6 +1842,7 @@ gerar_info_objetivo <- function(varsobj, objfun) {
                         "mae"   = "MAE",
                         "rmse"  = "RMSE",
                         "nse"   = "NSE",
+                        "kge"   = "KGE",
                         "bias"  = "Bias",
                         "skill" = "Skill_Persistencia",
                         NULL)
