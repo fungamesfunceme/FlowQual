@@ -664,7 +664,7 @@ ler_perfis_observados <- function(dir_meas, sim_start, sim_end,
         amostra <- readxl::read_excel(arquivo, sheet = aba, col_names = FALSE, n_max = 15)
         linhas <- apply(amostra, 1, function(x) {
           nomes_linha <- normalizar_cabecalho_perfil(x)
-          sum(grepl("data|date|datetime|prof|depth|temp", nomes_linha))
+          sum(grepl("data|date|datetime|prof|depth|temp|od|oxygen|oxigen", nomes_linha))
         })
         linha_cabecalho <- which.max(linhas)
         df <- readxl::read_excel(
@@ -686,8 +686,11 @@ ler_perfis_observados <- function(dir_meas, sim_start, sim_end,
       col_hora <- localizar("^time|^hora$")
       col_prof <- localizar("profundidade|^prof_|^prof$|depth")
       col_temp <- localizar("temperatura.*agua|^temp_|^temp$|temp_c")
+      col_od <- localizar(
+        "^od_mg_l_o2_?$|^od_sonda_?$|^odo_mg_l|oxigenio.*dissolvido|dissolved.*oxygen"
+      )
 
-      if (is.null(col_prof) || is.null(col_temp) ||
+      if (is.null(col_prof) || (is.null(col_temp) && is.null(col_od)) ||
           (is.null(col_datetime) && is.null(col_data))) {
         return(tibble::tibble())
       }
@@ -706,7 +709,10 @@ ler_perfis_observados <- function(dir_meas, sim_start, sim_end,
         datetime_meas = dt,
         date = as.Date(dt, tz = tz),
         prof_m = suppressWarnings(as.numeric(df[[col_prof]])),
-        temp_C = suppressWarnings(as.numeric(df[[col_temp]])),
+        temp_C = if (is.null(col_temp)) rep(NA_real_, nrow(df)) else
+          suppressWarnings(as.numeric(df[[col_temp]])),
+        od_mgL = if (is.null(col_od)) rep(NA_real_, nrow(df)) else
+          suppressWarnings(as.numeric(df[[col_od]])),
         arquivo_origem = basename(arquivo),
         aba_origem = aba
       )
@@ -715,10 +721,10 @@ ler_perfis_observados <- function(dir_meas, sim_start, sim_end,
 
   purrr::map_dfr(arquivos, ler_arquivo) |>
     dplyr::filter(
-      !is.na(date), is.finite(prof_m), is.finite(temp_C),
+      !is.na(date), is.finite(prof_m),
       date >= as.Date(sim_start), date <= as.Date(sim_end)
     ) |>
-    dplyr::distinct(date, prof_m, temp_C, .keep_all = TRUE)
+    dplyr::distinct(date, prof_m, temp_C, od_mgL, .keep_all = TRUE)
 }
 
 
@@ -755,7 +761,41 @@ parear_perfis_temperatura <- function(df_meas, df_prf, segmento) {
 }
 
 
-ler_spr_temperatura <- function(arquivo_spr, ano_simul, segmento) {
+parear_perfis_oxigenio <- function(df_meas, df_spr, segmento) {
+  df_spr <- df_spr |> dplyr::filter(Segmento == as.integer(segmento))
+  if (!nrow(df_spr)) {
+    stop("O segmento ", segmento, " não possui perfis de oxigênio dissolvido no arquivo SPR.", call. = FALSE)
+  }
+
+  sim_por_dia <- split(df_spr, df_spr$Date)
+  sim_por_dia <- lapply(sim_por_dia, function(x) x[order(x$depth), , drop = FALSE])
+
+  purrr::pmap_dfr(
+    list(df_meas$date, df_meas$datetime_meas, df_meas$prof_m, df_meas$od_mgL),
+    function(data_medida, data_hora, profundidade, od_medido) {
+      perfil <- sim_por_dia[[as.character(data_medida)]]
+      if (is.null(perfil) || nrow(perfil) < 2L) return(tibble::tibble())
+
+      tibble::tibble(
+        Date = as.Date(data_medida),
+        Hora_Medida = data_hora,
+        Profundidade_Medida = profundidade,
+        OD_Medido = od_medido,
+        OD_Simulado = stats::approx(
+          x = perfil$depth,
+          y = perfil$value,
+          xout = profundidade,
+          rule = 2,
+          ties = mean
+        )$y
+      )
+    }
+  )
+}
+
+
+ler_spr_temperatura <- function(arquivo_spr, ano_simul, segmento,
+                                constituinte = "Temperature") {
   if (!file.exists(arquivo_spr)) {
     stop("Arquivo spr.opt não encontrado: ", arquivo_spr, call. = FALSE)
   }
@@ -821,7 +861,7 @@ ler_spr_temperatura <- function(arquivo_spr, ano_simul, segmento) {
     value = suppressWarnings(as.numeric(dados_spr[[coluna_valor]]))
   ) |>
     dplyr::filter(
-      tolower(Constituinte) == "temperature",
+      tolower(Constituinte) == tolower(constituinte),
       is.finite(JDAY), is.finite(depth), is.finite(value),
       value > -90
     ) |>
@@ -834,7 +874,7 @@ ler_spr_temperatura <- function(arquivo_spr, ano_simul, segmento) {
 
   if (!nrow(resultado)) {
     stop(
-      "O spr.opt não contém linhas válidas de Temperature para o segmento ",
+      "O spr.opt não contém linhas válidas de ", constituinte, " para o segmento ",
       segmento,
       ". Verifique a configuração da saída SPR no w2_con.npt.",
       call. = FALSE
@@ -935,6 +975,50 @@ calcular_perfis_temperatura <- function(dir, segmento, reserv_sigla, ano_simul,
 }
 
 
+calcular_perfis_oxigenio <- function(dir, segmento, reserv_sigla, ano_simul,
+                                     tz = "America/Fortaleza") {
+  arquivo_spr <- localizar_arquivo_spr_controle(dir)
+  df_spr <- ler_spr_temperatura(
+    arquivo_spr, ano_simul, segmento,
+    constituinte = "Dissolved_oxygen"
+  )
+
+  arquivo_perfis <- validar_arquivo_perfis_observados(dir, reserv_sigla)
+  medidas <- ler_perfis_observados(
+    arquivo_perfis$caminho,
+    min(df_spr$Date), max(df_spr$Date), tz
+  ) |>
+    dplyr::filter(is.finite(od_mgL))
+  pareado <- parear_perfis_oxigenio(medidas, df_spr, segmento)
+  if (!nrow(pareado)) {
+    stop(
+      "Não existem datas coincidentes entre o arquivo SPR e os perfis observados de oxigênio dissolvido.",
+      call. = FALSE
+    )
+  }
+
+  rmse_diario <- pareado |>
+    dplyr::mutate(Erro_Quad = (OD_Medido - OD_Simulado)^2) |>
+    dplyr::group_by(Date) |>
+    dplyr::summarise(
+      RMSE = sqrt(mean(Erro_Quad, na.rm = TRUE)),
+      .groups = "drop"
+    )
+
+  fo_perfil <- sqrt(mean(rmse_diario$RMSE^2, na.rm = TRUE))
+  if (!is.finite(fo_perfil)) {
+    stop("A função objetivo do perfil de oxigênio dissolvido é inválida.", call. = FALSE)
+  }
+
+  list(
+    FO3 = fo_perfil,
+    df_paired = pareado,
+    rmse_diario = rmse_diario,
+    df_spr = df_spr
+  )
+}
+
+
 plot_perf_temp <- function(df_paired, xlim_temp = NULL, ylim_depth = NULL) {
   if (is.null(xlim_temp)) {
     faixa <- range(c(df_paired$Temp_Medida, df_paired$Temp_Simulada), na.rm = TRUE)
@@ -970,6 +1054,49 @@ plot_perf_temp <- function(df_paired, xlim_temp = NULL, ylim_depth = NULL) {
       ggplot2::labs(
         title = sprintf("%s | RMSE %.2f °C", format(as.Date(data_atual), "%d/%m/%Y"), rmse_dia),
         x = "Temperatura (°C)", y = "Profundidade (m)", color = NULL
+      ) +
+      ggplot2::theme_minimal(base_size = 10) +
+      ggplot2::theme(legend.position = "bottom", plot.title = ggplot2::element_text(size = 9))
+  }
+  plots
+}
+
+
+plot_perf_od <- function(df_paired, xlim_od = NULL, ylim_depth = NULL) {
+  if (is.null(xlim_od)) {
+    faixa <- range(c(df_paired$OD_Medido, df_paired$OD_Simulado), na.rm = TRUE)
+    margem <- max(diff(faixa) * 0.05, 0.25)
+    xlim_od <- faixa + c(-margem, margem)
+  }
+  if (is.null(ylim_depth)) {
+    ylim_depth <- c(max(df_paired$Profundidade_Medida, na.rm = TRUE) * 1.05, 0)
+  }
+
+  datas <- sort(unique(as.Date(df_paired$Date)))
+  plots <- list()
+  for (data_atual in datas) {
+    sub <- df_paired |> dplyr::filter(as.Date(Date) == as.Date(data_atual))
+    if (nrow(sub) < 2L) next
+    rmse_dia <- sqrt(mean((sub$OD_Medido - sub$OD_Simulado)^2, na.rm = TRUE))
+    df_plot <- dplyr::bind_rows(
+      sub |> dplyr::transmute(depth = Profundidade_Medida, od = OD_Medido, serie = "Medida"),
+      sub |> dplyr::transmute(depth = Profundidade_Medida, od = OD_Simulado, serie = "Simulada")
+    )
+    plots[[as.character(data_atual)]] <- ggplot2::ggplot(
+      df_plot,
+      ggplot2::aes(x = od, y = depth, color = serie)
+    ) +
+      ggplot2::geom_path(linewidth = 0.9) +
+      ggplot2::geom_point(
+        data = df_plot |> dplyr::filter(serie == "Medida"),
+        size = 1.8
+      ) +
+      ggplot2::scale_x_continuous(limits = xlim_od) +
+      ggplot2::scale_y_reverse(limits = ylim_depth) +
+      ggplot2::scale_color_manual(values = c(Medida = "black", Simulada = "blue")) +
+      ggplot2::labs(
+        title = sprintf("%s | RMSE %.2f mg/L", format(as.Date(data_atual), "%d/%m/%Y"), rmse_dia),
+        x = "Oxigênio dissolvido (mg/L)", y = "Profundidade (m)", color = NULL
       ) +
       ggplot2::theme_minimal(base_size = 10) +
       ggplot2::theme(legend.position = "bottom", plot.title = ggplot2::element_text(size = 9))
@@ -1255,14 +1382,14 @@ processar_resultados_cequal <- function(
     )
   )
 
-  # O perfil é necessário para a simulação tipo 2 e para o objetivo TEMPPERFIL.
+  # Os perfis são necessários para as respectivas simulações e objetivos.
   # A ausência de um perfil válido interrompe a otimização, mas não impede que os
   # demais gráficos da simulação sejam produzidos.
-  perfil_solicitado <-
+  perfil_temperatura_solicitado <-
     (identical(as.integer(tipo), 2L) && identical(as.integer(salvar_figura), 1L)) ||
     "TEMPPERFIL" %in% varsobj
   perfil_temperatura <- NULL
-  if (perfil_solicitado) {
+  if (perfil_temperatura_solicitado) {
     perfil_temperatura <- tryCatch(
       calcular_perfis_temperatura(dir, seg, reserv_sigla_perfil, ano_simul),
       error = function(e) {
@@ -1286,6 +1413,34 @@ processar_resultados_cequal <- function(
     )
   }
 
+  perfil_oxigenio_solicitado <-
+    (identical(as.integer(tipo), 3L) && identical(as.integer(salvar_figura), 1L)) ||
+    "DOPERFIL" %in% varsobj
+  perfil_oxigenio <- NULL
+  if (perfil_oxigenio_solicitado) {
+    perfil_oxigenio <- tryCatch(
+      calcular_perfis_oxigenio(dir, seg, reserv_sigla_perfil, ano_simul),
+      error = function(e) {
+        if ("DOPERFIL" %in% varsobj) {
+          stop(conditionMessage(e), call. = FALSE)
+        }
+        if (!is.null(shiny::getDefaultReactiveDomain())) {
+          shiny::showNotification(
+            conditionMessage(e),
+            type = "warning",
+            duration = 10
+          )
+        }
+        warning(
+          "Não foi possível calcular/plotar o perfil de oxigênio dissolvido: ",
+          conditionMessage(e),
+          call. = FALSE
+        )
+        NULL
+      }
+    )
+  }
+
   if (!is.null(perfil_temperatura)) {
     perfil_obs <- perfil_temperatura$df_paired$Temp_Medida
     perfil_sim <- perfil_temperatura$df_paired$Temp_Simulada
@@ -1294,6 +1449,27 @@ processar_resultados_cequal <- function(
       tibble::tibble(
         variavel = "Temperatura Perfil",
         RMSE = perfil_temperatura$FO3,
+        MAE = mae(perfil_sim, perfil_obs),
+        Bias = bias(perfil_sim, perfil_obs),
+        NSE = nse(perfil_obs, perfil_sim),
+        KGE = kge(perfil_obs, perfil_sim),
+        Skill_Persistencia = skill_vs(
+          perfil_sim,
+          perfil_obs,
+          make_persist(perfil_obs)
+        )
+      )
+    )
+  }
+
+  if (!is.null(perfil_oxigenio)) {
+    perfil_obs <- perfil_oxigenio$df_paired$OD_Medido
+    perfil_sim <- perfil_oxigenio$df_paired$OD_Simulado
+    metricas <- dplyr::bind_rows(
+      metricas,
+      tibble::tibble(
+        variavel = "Oxigênio Dissolvido Perfil",
+        RMSE = perfil_oxigenio$FO3,
         MAE = mae(perfil_sim, perfil_obs),
         Bias = bias(perfil_sim, perfil_obs),
         NSE = nse(perfil_obs, perfil_sim),
@@ -1560,6 +1736,28 @@ processar_resultados_cequal <- function(
                base_cex = 1.2)
      
      dev.off()
+
+     if (!is.null(perfil_oxigenio)) {
+       graficos_perfil <- plot_perf_od(perfil_oxigenio$df_paired)
+       if (length(graficos_perfil)) {
+         arquivo_figura_perfil <- file.path(
+           diretorio_resultados,
+           paste0("perfis_oxigenio_dissolvido_", simul, ".png")
+         )
+         validar_arquivo_para_gravacao(
+           arquivo_figura_perfil,
+           "figura dos perfis de oxigênio dissolvido"
+         )
+         ggplot2::ggsave(
+           filename = arquivo_figura_perfil,
+           plot = patchwork::wrap_plots(graficos_perfil, ncol = 4),
+           width = 16,
+           height = max(6, ceiling(length(graficos_perfil) / 4) * 4),
+           units = "in",
+           dpi = 300
+         )
+       }
+     }
      
      
    }
@@ -1573,7 +1771,8 @@ processar_resultados_cequal <- function(
 
   return(list(
     metricas = metricas,
-    perfil_temperatura = perfil_temperatura
+    perfil_temperatura = perfil_temperatura,
+    perfil_oxigenio = perfil_oxigenio
   ))
   
 }
@@ -1598,7 +1797,7 @@ Otmiza_Quali <- function(x, contexto, diretorio_cequal, varsobj, objfun, windows
     rep(10^6, length(varsobj))
   }
 
-  if ("TEMPPERFIL" %in% varsobj) {
+  if (any(c("TEMPPERFIL", "DOPERFIL") %in% varsobj)) {
     validar_arquivo_perfis_observados(
       contexto$caminhos$diretorio,
       contexto$configuracao$reservatorio
@@ -1831,6 +2030,7 @@ gerar_info_objetivo <- function(varsobj, objfun) {
     Cota = "Cota",
     TEMP = "Temperatura",
     TEMPPERFIL = "Temperatura Perfil",
+    DOPERFIL = "Oxigênio Dissolvido Perfil",
     EVAP = "Evaporação",
     DO   = "Oxigênio Dissolvido",
     PO4  = "Fosfato",

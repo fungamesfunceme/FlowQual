@@ -2025,7 +2025,7 @@ observeEvent(input$update, {
         diretorio_cequal <- contexto$diretorio_cequal
         dados_simulacao  <- contexto$dados_simulacao
 
-        if (identical(as.character(input$tipo_simulacao), "2")) {
+        if (as.character(input$tipo_simulacao) %in% c("2", "3")) {
           perfil_observado_ok <- tentar_operacao_arquivo_shiny(
             function() {
               validar_arquivo_perfis_observados(
@@ -2572,7 +2572,8 @@ observeEvent(input$update, {
                                "3" = c(
                                  "Fósforo" = "PO4",
                                  "Clorofila" = "ALG1",
-                                 "Oxigênio Dissolvido" = "DO"
+                                 "Oxigênio Dissolvido" = "DO",
+                                 "Perfil Oxigênio Dissolvido" = "DOPERFIL"
                                )
         )
         
@@ -2680,7 +2681,7 @@ observeEvent(input$update, {
      contexto <- preparar_contexto(input$tipo)
      if (is.null(contexto)) return(NULL)
 
-     if ("TEMPPERFIL" %in% input$vars_obj) {
+     if (any(c("TEMPPERFIL", "DOPERFIL") %in% input$vars_obj)) {
        perfil_observado_ok <- tentar_operacao_arquivo_shiny(
          function() {
            validar_arquivo_perfis_observados(
