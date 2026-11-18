@@ -1837,11 +1837,7 @@ Otmiza_Quali <- function(x, contexto, diretorio_cequal, varsobj, objfun, windows
     preproc <- 0
   }
   
-  execucao_cequal <- executar_cequal_monitorado(
-    executavel = file.path(app_dir, "bin", "w2_3.7_64.exe"),
-    diretorio = diretorio_cequal,
-    em_otimizacao = TRUE
-  )
+  execucao_cequal <- executar_cequal_bat(arq_exe2)
   if (execucao_cequal$codigo != 0L) {
     return(penalizar_execucao(paste(execucao_cequal$saida, collapse = " ")))
   }
@@ -1924,11 +1920,7 @@ Otmiza_Quali <- function(x, contexto, diretorio_cequal, varsobj, objfun, windows
         preproc <- 0
       }
       
-      execucao_cequal <- executar_cequal_monitorado(
-        executavel = file.path(app_dir, "bin", "w2_3.7_64.exe"),
-        diretorio = diretorio_cequal,
-        em_otimizacao = TRUE
-      )
+      execucao_cequal <- executar_cequal_bat(arq_exe2)
       if (execucao_cequal$codigo != 0L) {
         return(penalizar_execucao(paste(
           "janela", sim_j,
@@ -2640,8 +2632,8 @@ gerar_limites <- function(tipo){
       # lower = c(0,0,0,0,0,0,0,50),
       # upper = c(4,2,1,1,1,1,1,100)
       # 
-      lower <- c(0, 0, 0, 0, 0, 0, 20, 2),
-      upper <- c(25, 1, 1, 1, 1, 5, 100, 15)   #Os parametros estao multiplicados por 10 e 100 por conta da limitação do modelo
+      lower = c(0, 0, 0, 0, 0, 0, 20, 2),
+      upper = c(25, 1, 1, 1, 1, 5, 100, 15)   #Os parametros estao multiplicados por 10 e 100 por conta da limitação do modelo
       
     )
   }
@@ -3200,3 +3192,41 @@ gerar_figura_cenario_qualidade <- function(diretorio_resultados,ano_simul,nome_s
   
   return(caminho_figura)
 }
+
+
+executar_cequal_bat <- function(bat) {
+  pasta <- dirname(bat)
+  log <- file.path(pasta, "execucao_cequal_bat.log")
+  estado <- function(padrao) {
+    arquivos <- list.files(pasta, pattern = padrao, full.names = TRUE,
+                           ignore.case = TRUE)
+    info <- file.info(arquivos)
+    setNames(as.numeric(info$mtime), arquivos)
+  }
+  resultado <- "^(FLOWBAL\\.OPT|tsr_.*\\.OPT)$"
+  erro <- "^W2Errordump\\.opt$"
+  antes <- estado(resultado)
+  erro_antes <- estado(erro)
+  partida <- paste("Otimização via BAT:", format(Sys.time()), basename(bat))
+  gravar_linhas_seguro(partida, log)
+
+  codigo <- shell(shQuote(bat), wait = TRUE, timeout = 21600L, mustWork = NA)
+  saida <- paste("Código do BAT:", codigo)
+  depois <- estado(resultado)
+  erro_depois <- estado(erro)
+  novos <- function(atual, anterior) {
+    any(!names(atual) %in% names(anterior) |
+        atual != anterior[names(atual)], na.rm = TRUE)
+  }
+  if (codigo == 0L && novos(erro_depois, erro_antes)) {
+    codigo <- 2L
+    saida <- c(saida, "W2_ERRORDUMP_DETECTADO")
+  }
+  if (codigo == 0L && !novos(depois, antes)) {
+    codigo <- 5L
+    saida <- c(saida, "RESULTADOS_NAO_ATUALIZADOS_NESTA_EXECUCAO")
+  }
+  gravar_linhas_seguro(c(partida, saida, paste("Código final:", codigo)), log)
+  list(codigo = codigo, saida = saida)
+}
+
